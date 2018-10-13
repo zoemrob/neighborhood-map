@@ -19,8 +19,42 @@ main {
         order: 2;
         width: 70%;
     }
-    div.list-wrapper {
+    div.large-screen-wrapper {
         order: 1;
         width: 30%;
+        display: flex;
+        flex-wrap: wrap;
+    }
+    div.search-wrapper__large-screen {
+        order: 1;
+        width: 100%;
+    }
+    div.search-results-wrapper__large-screen {
+        order: 2;
+        width: 100%;
+    }
+}
+
+@media only screen and (min-width: 768px) and (max-width: 1023px) {
+    div.map-wrapper {
+        height: 90vh;
+        order: 2;
+        width: 100%;
+    }
+    div.search-wrapper {
+        order: 1;
+        width: 100%;
+    }
+}
+
+@media only screen and (max-width: 767px) {
+    div.map-wrapper {
+        height: 50vh;
+        order: 2;
+        width: 100%;
+    }
+    div.search-wrapper {
+        order: 1;
+        width: 100%;
     }
 }
