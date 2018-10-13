@@ -1,11 +1,12 @@
 import React, {Component} from 'react';
 import GoogleMapReact from 'google-map-react';
 import Marker from './Marker';
-import {apikey} from "../apikey";
+import {gmapsAPIKey} from "../apikeys";
+import '../styles/Map.css'
 
 export default class Map extends Component {
     static defaultProps = {
-        key: apikey,
+        key: gmapsAPIKey,
         center: {
             lat:45.3815395,
             lng: -122.5914513
@@ -17,15 +18,24 @@ export default class Map extends Component {
         super(props);
     }
 
+
+
     render() {
+        const { activeLocation, key, center, zoom, locations, setActiveLocation } = this.props;
+
         return (
-            <div id="map-container" style={{height: '90vh', width: '100%'}}>
+            <div id="map-container">
                 <GoogleMapReact
-                    bootstrapURLKeys={{ key: this.props.key}}
-                    defaultCenter={this.props.center}
-                    defaultZoom={this.props.zoom}
+                    bootstrapURLKeys={{ key: key}}
+                    defaultCenter={center}
+                    defaultZoom={zoom}
                 >
-                    <Marker lat={this.props.center.lat} lng={this.props.center.lng}/>
+                    {locations.map((loc, i) => {
+                        if (activeLocation === loc.id) {
+                            return <Marker key={i} active={true} {...loc}/>
+                        }
+                        return <Marker key={i} active={false} setActiveLocation={setActiveLocation} {...loc}/>
+                    })}
                 </GoogleMapReact>
             </div>
         )
