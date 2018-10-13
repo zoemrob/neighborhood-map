@@ -28,7 +28,8 @@ export default class Map extends Component {
                 <GoogleMapReact
                     bootstrapURLKeys={{ key: key}}
                     defaultCenter={center}
-                    defaultZoom={isLargeScreen ? zoom : 15}
+                    defaultZoom={zoom}
+                    zoom={!isLargeScreen ? 15 : null}
                 >
                     {locations.map((loc, i) => {
                         if (activeLocation === loc.id) {
