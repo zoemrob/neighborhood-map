@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import { fetchById } from '../searchAPI';
 import '../styles/Marker.css';
 
@@ -18,7 +18,12 @@ export default class Marker extends Component {
     
     handleFocus = e => {
         e.stopPropagation();
-        this.props.setActiveLocation(this.props.id);
+        this.props.setActiveLocation(this.state.yelpData);
+    };
+
+    handleBlur = e => {
+        e.stopPropagation();
+        this.props.setActiveLocation({});
     };
 
     async componentDidMount() {
@@ -50,6 +55,7 @@ export default class Marker extends Component {
                     id={id}
                     ref={this.activeRef}
                     onFocus={!active ? this.handleFocus : null}
+                    onBlur={active ? this.handleBlur : null}
                 >
                     <svg height="24" version="1.1" width="24" xmlns="http://www.w3.org/2000/svg">
                         <g transform="translate(0 -1028.4)">

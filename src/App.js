@@ -8,7 +8,7 @@ class App extends Component {
         super(props);
         this.state = {
             locations: [],
-            activeLocation: '',
+            activeLocation: {},
             isLargeScreen: false
         }
     }
@@ -17,6 +17,7 @@ class App extends Component {
         this.setState({activeLocation: location})
     };
 
+    // reference: https://stackoverflow.com/questions/46586165/react-conditionally-render-based-on-viewport-size
     checkScreen = (e, inMount = false) => {
         if (inMount === true) return window.innerWidth >= 1024;
         this.setState({isLargeScreen: window.innerWidth >= 1024 });
@@ -24,8 +25,12 @@ class App extends Component {
 
     componentDidMount() {
         const defaultLocations = [
-            {lat:45.3800766, lng:-122.5942759, name: 'Happyrock Coffee Roasting', id: 'jTf7X9quu4fLg83pch62nQ'},
-            {lat:45.38149, lng:-122.58226, name: 'Safeway', id: 'UKmguQPdsC7OWZobSzE9DQ'}
+            {lat: 45.3819299, lng: -122.59601, name: 'Top Notch Laundromat', id: 'Kdl1pZ2V5tqPrmqnsQig-g'},
+            {lat: 45.3800766, lng: -122.5942759, name: 'Happyrock Coffee Roasting', id: 'jTf7X9quu4fLg83pch62nQ'},
+            {lat: 45.38244, lng: -122.59235, name: 'John Wetten Elementary', id: 'JBReIa-8xfh5uLoT2kk9dg'},
+            {lat: 45.3826177865267, lng: -122.589969411492, name: 'Max Patterson Park', id: 'wCy6Ucv7o3dePxBK0hqqkQ'},
+            {lat: 45.38149, lng: -122.58226, name: 'Safeway', id: 'UKmguQPdsC7OWZobSzE9DQ'},
+            {lat: 45.38199, lng: -122.58086, name: 'High Rocks Restaurant', id: 'P0gBqOZ_HNU4Ze_QPRo4dw'}
         ];
         window.addEventListener('resize', this.checkScreen);
         this.setState({locations: defaultLocations, isLargeScreen: this.checkScreen(null, true)});

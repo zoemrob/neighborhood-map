@@ -32,11 +32,12 @@ export default class Map extends Component {
                     zoom={!isLargeScreen ? 15 : null}
                 >
                     {locations.map((loc, i) => {
-                        if (activeLocation === loc.id) {
+                        if (activeLocation.id === loc.id) {
                             return (
                                 <Marker
                                     key={i}
                                     active={true}
+                                    setActiveLocation={setActiveLocation}
                                     {...loc}
                                 />)
                         }
