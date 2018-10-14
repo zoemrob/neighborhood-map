@@ -1,20 +1,46 @@
 import React, {Component} from 'react';
 import Map from './components/Map';
+import ListView from './components/ListView';
+import { fetchById } from './searchAPI';
 import './App.css';
 
 class App extends Component {
 
     constructor(props) {
         super(props);
+        this._isMounted = false;
+
         this.state = {
             locations: [],
-            activeLocation: {},
+            activeLocation: {
+                id: '',
+                data: {},
+                error: false,
+                errorMessage: ''
+            },
+            query: '',
             isLargeScreen: false
         }
     }
 
-    setActiveLocation = (location) => {
-        this.setState({activeLocation: location})
+    setActiveLocation = async (location) => {
+        if (location.id !== '') {
+            const data = await fetchById(location.id);
+            if (data.error) this._isMounted && this.setState({activeLocation: {
+                    error: true,
+                    errorMessage: data.error
+                }});
+            else {
+                this._isMounted && this.setState({activeLocation: {id: location.id, data }});
+            }
+        } else {
+            this.setState({activeLocation: {
+                id: '',
+                data: {},
+                error: false,
+                errorMessage: ''}
+            });
+        }
     };
 
     // reference: https://stackoverflow.com/questions/46586165/react-conditionally-render-based-on-viewport-size
@@ -24,13 +50,14 @@ class App extends Component {
     };
 
     componentDidMount() {
+        this._isMounted = true;
         const defaultLocations = [
-            {lat: 45.3819299, lng: -122.59601, name: 'Top Notch Laundromat', id: 'Kdl1pZ2V5tqPrmqnsQig-g'},
+            {lat: 45.3819299, lng: -122.59601, name: 'Top Notch', id: 'Kdl1pZ2V5tqPrmqnsQig-g'},
             {lat: 45.3800766, lng: -122.5942759, name: 'Happyrock Coffee Roasting', id: 'jTf7X9quu4fLg83pch62nQ'},
             {lat: 45.38244, lng: -122.59235, name: 'John Wetten Elementary', id: 'JBReIa-8xfh5uLoT2kk9dg'},
             {lat: 45.3826177865267, lng: -122.589969411492, name: 'Max Patterson Park', id: 'wCy6Ucv7o3dePxBK0hqqkQ'},
-            {lat: 45.38149, lng: -122.58226, name: 'Safeway', id: 'UKmguQPdsC7OWZobSzE9DQ'},
-            {lat: 45.38199, lng: -122.58086, name: 'High Rocks Restaurant', id: 'P0gBqOZ_HNU4Ze_QPRo4dw'}
+            {lat: 45.38149, lng: -122.58226, name: 'Safeway Food & Drug', id: 'UKmguQPdsC7OWZobSzE9DQ'},
+            {lat: 45.38199, lng: -122.58086, name: 'High Rocks Restaurant & Lounge', id: 'P0gBqOZ_HNU4Ze_QPRo4dw'}
         ];
         window.addEventListener('resize', this.checkScreen);
         this.setState({locations: defaultLocations, isLargeScreen: this.checkScreen(null, true)});
@@ -38,10 +65,18 @@ class App extends Component {
 
     componentWillUnmount() {
         window.removeEventListener('resize', this.checkScreen);
+        this._isMounted = false;
     }
 
     render() {
-        const { isLargeScreen, locations, activeLocation } = this.state;
+        const { isLargeScreen, locations, activeLocation, query } = this.state;
+        const filteredLocations = query !== '' ? locations.filter(loc => loc.includes(query)) : locations;
+        const listViewProps = {
+            locations: filteredLocations,
+            activeLocation,
+            isLargeScreen
+        };
+
         return (
             <React.Fragment>
                 <header className="header">
@@ -54,7 +89,7 @@ class App extends Component {
 
                             </div>
                             <div className="search-results-wrapper__large-screen">
-
+                                <ListView {...listViewProps}/>
                             </div>
                         </div>
                     ) : (
@@ -63,13 +98,13 @@ class App extends Component {
 
                             </div>
                             <div className="search-results-wrapper">
-
+                                <ListView {...listViewProps}/>
                             </div>
                         </React.Fragment>
                     )}
                     <div className="map-wrapper">
                         <Map
-                            locations={locations}
+                            locations={filteredLocations}
                             activeLocation={activeLocation}
                             setActiveLocation={this.setActiveLocation}
                             isLargeScreen={isLargeScreen}/>

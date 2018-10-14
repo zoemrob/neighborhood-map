@@ -1,42 +1,24 @@
 import React, { Component } from 'react';
-import { fetchById } from '../searchAPI';
 import '../styles/Marker.css';
 
 export default class Marker extends Component {
     constructor(props) {
         super(props);
-        // prevent memory leak
-        this._isMounted = false;
-
         this.activeRef = React.createRef();
-        this.state = {
-            yelpData: {},
-            error: false,
-            errorMessage: '',
-        }
     }
     
     handleFocus = e => {
         e.stopPropagation();
-        this.props.setActiveLocation(this.state.yelpData);
+        this.props.setActiveLocation({id: this.props.id});
     };
 
     handleBlur = e => {
         e.stopPropagation();
-        this.props.setActiveLocation({});
+        this.props.setActiveLocation({id: ''});
     };
 
-    async componentDidMount() {
-        this._isMounted = true;
+    componentDidMount() {
         if (this.props.active) this.activeRef.current.focus();
-
-        const data = await fetchById(this.props.id);
-        if (data.error) this._isMounted && this.setState({error: true, errorMessage: data.error});
-        else { this._isMounted && this.setState({yelpData: data}); }
-    }
-
-    componentWillUnmount() {
-        this._isMounted = false;
     }
 
     render() {
