@@ -8,7 +8,7 @@ export default class Map extends Component {
     static defaultProps = {
         key: gmapsAPIKey,
         center: {
-            lat:45.3815395,
+            lat: 45.3815395,
             lng: -122.588222
         },
         zoom: 16
@@ -37,15 +37,19 @@ export default class Map extends Component {
     // };
 
     render() {
-        const { activeLocation, key, center, zoom, locations, setActiveLocation, isLargeScreen } = this.props;
+        const {activeLocation, key, center, zoom, locations, setActiveLocation, isLargeScreen} = this.props;
 
         return (
             <div id="map-container">
                 <GoogleMapReact
-                    bootstrapURLKeys={{ key: key}}
+                    bootstrapURLKeys={{key: key}}
                     defaultCenter={center}
                     defaultZoom={zoom}
                     zoom={!isLargeScreen ? 15 : null}
+                    center={activeLocation.id !== '' ? ({
+                            lat: activeLocation.data.coordinates.latitude,
+                            lng: activeLocation.data.coordinates.longitude
+                        }) : null}
                 >
                     {locations.map((loc, i) => {
                         if (activeLocation.id === loc.id) {
