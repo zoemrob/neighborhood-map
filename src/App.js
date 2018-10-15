@@ -89,18 +89,14 @@ class App extends Component {
                             <div className="search-wrapper__large-screen">
 
                             </div>
-                            <div className="search-results-wrapper__large-screen">
-                                <ListView {...listViewProps}/>
-                            </div>
+                            <ListView {...listViewProps}/>
                         </div>
                     ) : (
                         <React.Fragment>
                             <div className="search-wrapper">
 
                             </div>
-                            <div className="search-results-wrapper">
-                                <ListView {...listViewProps}/>
-                            </div>
+                            <ListView {...listViewProps}/>
                         </React.Fragment>
                     )}
                     <div className="map-wrapper">

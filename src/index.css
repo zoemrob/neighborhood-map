@@ -25,11 +25,11 @@ main {
         display: flex;
         flex-wrap: wrap;
     }
-    div.search-wrapper__large-screen {
+    div.search-wrapper {
         order: 1;
         width: 100%;
     }
-    div.search-results-wrapper__large-screen {
+    div.search-results-wrapper {
         order: 2;
         width: 100%;
     }
