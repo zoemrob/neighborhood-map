@@ -3,7 +3,6 @@ import Map from './components/Map';
 import ListView from './components/ListView';
 import SearchHeader from './components/SearchHeader';
 import {fetchById} from './searchAPI';
-import './App.css';
 
 class App extends Component {
 
@@ -122,12 +121,7 @@ class App extends Component {
                             setActiveLocation={this.setActiveLocation}
                             isLargeScreen={isLargeScreen}/>
                     </div>
-                    {!isLargeScreen && (
-                        <React.Fragment>
-
-                            <ListView {...listViewProps}/>
-                        </React.Fragment>
-                    )}
+                    {!isLargeScreen && <ListView {...listViewProps}/>}
                 </main>
             </React.Fragment>
         )
