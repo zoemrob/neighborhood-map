@@ -113,10 +113,7 @@ class App extends Component {
                             <ListView {...listViewProps}/>
                         </div>
                     ) : (
-                        <React.Fragment>
-                            <SearchHeader updateQuery={this.updateQuery}/>
-                            <ListView {...listViewProps}/>
-                        </React.Fragment>
+                        <SearchHeader updateQuery={this.updateQuery}/>
                     )}
                     <div className="map-wrapper">
                         <Map
@@ -125,6 +122,12 @@ class App extends Component {
                             setActiveLocation={this.setActiveLocation}
                             isLargeScreen={isLargeScreen}/>
                     </div>
+                    {!isLargeScreen && (
+                        <React.Fragment>
+
+                            <ListView {...listViewProps}/>
+                        </React.Fragment>
+                    )}
                 </main>
             </React.Fragment>
         )

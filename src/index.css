@@ -57,4 +57,8 @@ main {
         order: 1;
         width: 100%;
     }
+    div.search-results-wrapper {
+        order: 3;
+        width: 100%;
+    }
 }

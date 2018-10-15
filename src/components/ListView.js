@@ -50,17 +50,26 @@ const ListView = ({locations, activeLocation, isLargeScreen, setActiveLocation})
                             onFocus={e => handler(e, loc.id, setActiveLocation)}
                         >{loc.name}</li>
                     )))
-            ) : (
-                locations.filter(loc => loc.id !== activeLocation.id)
-                    .map(loc =>
-                        <li
-                            className={`list-item ${css(listStyles.listItem)}`}
-                            key={loc.id}
-                            tabIndex="1"
-                            onClick={e => handler(e, loc.id, setActiveLocation)}
-                            onFocus={e => handler(e, loc.id, setActiveLocation)}
-                        >{loc.name}</li>
-                    )
+            ) : // move active location to the top of the list and render it differently on lower screen sizes
+                ([activeLocation, ...locations.filter(loc => loc.id !== activeLocation.id)]
+                        .map(loc => (
+                            // don't render if there is no active location
+                            loc.id === activeLocation.id && loc.id !== '' ? (
+                                <li className={`list-item__active ${css(listStyles.activeItem)}`}
+                                    key={activeLocation.id}
+                                >
+                                    <h2 className="list-item__active-header">{activeLocation.data.name}</h2>
+                                    <span>I am active.</span>
+                                </li>
+                            ) : (
+                                <li
+                                    className={`list-item ${css(listStyles.listItem)}`}
+                                    key={loc.id}
+                                    tabIndex="1"
+                                    onClick={e => handler(e, loc.id, setActiveLocation)}
+                                    onFocus={e => handler(e, loc.id, setActiveLocation)}
+                                >{loc.name}</li>
+                            )))
             )}
         </ul>
     </div>
