@@ -73,8 +73,9 @@ class App extends Component {
         const filteredLocations = query !== '' ? locations.filter(loc => loc.includes(query)) : locations;
         const listViewProps = {
             locations: filteredLocations,
+            setActiveLocation: this.setActiveLocation,
             activeLocation,
-            isLargeScreen
+            isLargeScreen,
         };
 
         return (

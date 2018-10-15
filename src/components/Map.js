@@ -16,9 +16,25 @@ export default class Map extends Component {
 
     constructor(props) {
         super(props);
+
+        // sourced from: https://medium.com/@jessebeach/dealing-with-focus-and-blur-in-a-composite-widget-in-react-90d3c3b49a9b
+        // this.state = {
+        //     isManagingFocus: false
+        // };
+        //
+        // this._timeoutId = null;
     }
 
-
+    // _onFocus = (e) => {
+    //     if (this.state.isManagingFocus && e.target.className !== 'map-icon') {
+    //         this._timeoutId = setTimeout(() => {
+    //             this.setState({isManagingFocus: false});
+    //         }, 0);
+    //     } else if (!this.state.isManagingFocus && e.target.className === 'map-icon') {
+    //         clearTimeout(this._timeoutId);
+    //         this.setState({isManagingFocus: true});
+    //     }
+    // };
 
     render() {
         const { activeLocation, key, center, zoom, locations, setActiveLocation, isLargeScreen } = this.props;

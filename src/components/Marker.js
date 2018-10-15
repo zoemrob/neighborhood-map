@@ -7,19 +7,23 @@ export default class Marker extends Component {
         this.activeRef = React.createRef();
     }
     
-    handleFocus = e => {
-        e.stopPropagation();
+    handleFocus = () => {
         this.props.setActiveLocation({id: this.props.id});
     };
 
-    handleBlur = e => {
-        e.stopPropagation();
-        this.props.setActiveLocation({id: ''});
-    };
+    // handleBlur = e => {
+    //     e.stopPropagation();
+    //     this.props.setActiveLocation({id: ''});
+    // };
 
-    componentDidMount() {
-        if (this.props.active) this.activeRef.current.focus();
-    }
+    static activeStyles = {
+        fontWeight: 'bold',
+        fontSize: '1.3em',
+        padding: '0.5em',
+        borderRadius: '10px',
+        boxShadow: '5px 10px 15px 0 rgba(0,0,0,0.2)',
+        zIndex: '100'
+    };
 
     render() {
         const { id, name, active } = this.props;
@@ -29,15 +33,16 @@ export default class Marker extends Component {
                 <label
                     htmlFor={id}
                     className="marker-label"
-                    style={document.activeElement === this.activeRef.current || active ? {fontWeight: 'bold', fontSize: '1.3em'} : null}
+                    style={active || document.activeElement === this.activeRef.current ? Marker.activeStyles : null}
                 >{name}</label>
                 <span
                     tabIndex="0"
                     className="map-icon"
                     id={id}
                     ref={this.activeRef}
+                    style={active || document.activeElement === this.activeRef.current ? {transform: 'translate(-50%, -50%) scale(1.3)'} : null}
                     onFocus={!active ? this.handleFocus : null}
-                    onBlur={active ? this.handleBlur : null}
+                    // onBlur={active ? this.handleBlur : null}
                 >
                     <svg height="24" version="1.1" width="24" xmlns="http://www.w3.org/2000/svg">
                         <g transform="translate(0 -1028.4)">
