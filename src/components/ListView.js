@@ -7,6 +7,9 @@ const handler = (e, id, setActiveLocation) => {
 };
 
 const listStyles = StyleSheet.create({
+    container: {
+        height: '90%'
+    },
     list: {
         padding: '0',
         margin: '0',
@@ -15,15 +18,19 @@ const listStyles = StyleSheet.create({
         height: '100%'
     },
     listItem: {
-        fontSize: '1.5em'
+        fontSize: '1.5em',
+        padding: '8px 1rem',
+        borderBottom: '2px solid #d2cfc6'
     },
     activeItem: {
-        fontSize: '2em'
+        fontSize: '2em',
+        backgroundColor: '#d2cfc6',
+        padding: '1rem'
     }
 });
 
 const ListView = ({locations, activeLocation, isLargeScreen, setActiveLocation}) => (
-    <div className="search-results-wrapper">
+    <div className={`search-results-wrapper ${css(listStyles.container)}`}>
         <ul className={`list-vew ${css(listStyles.list)}`}>
             {isLargeScreen ? (
                 locations.map(loc => (

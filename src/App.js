@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import Map from './components/Map';
 import ListView from './components/ListView';
-import { fetchById } from './searchAPI';
+import SearchHeader from './components/SearchHeader';
+import {fetchById} from './searchAPI';
 import './App.css';
 
 class App extends Component {
@@ -26,27 +27,48 @@ class App extends Component {
     setActiveLocation = async (location) => {
         if (location.id !== '') {
             const data = await fetchById(location.id);
-            if (data.error) this._isMounted && this.setState({activeLocation: {
+            if (data.error) this._isMounted && this.setState({
+                activeLocation: {
                     error: true,
                     errorMessage: data.error
-                }});
+                }
+            });
             else {
-                this._isMounted && this.setState({activeLocation: {id: location.id, data }});
+                this._isMounted && this.setState({activeLocation: {id: location.id, data}});
             }
         } else {
-            this.setState({activeLocation: {
-                id: '',
-                data: {},
-                error: false,
-                errorMessage: ''}
+            this.setState({
+                activeLocation: {
+                    id: '',
+                    data: {},
+                    error: false,
+                    errorMessage: ''
+                }
             });
         }
     };
 
     // reference: https://stackoverflow.com/questions/46586165/react-conditionally-render-based-on-viewport-size
-    checkScreen = (e, inMount = false) => {
+    _checkScreen = (e, inMount = false) => {
         if (inMount === true) return window.innerWidth >= 1024;
-        this.setState({isLargeScreen: window.innerWidth >= 1024 });
+        this.setState({isLargeScreen: window.innerWidth >= 1024});
+    };
+
+    _checkIfMarkerOrList = e => {
+        if (e.target.nodeName !== "LI" || e.target.nodeName !== "SPAN" || e.target.nodeName !== "SVG") {
+            this.setState({
+                activeLocation: {
+                    id: '',
+                    data: {},
+                    error: false,
+                    errorMessage: ''
+                }
+            })
+        }
+    };
+
+    updateQuery = query => {
+        if (query.trim().toLowerCase() !== this.state.query) this.setState({query});
     };
 
     componentDidMount() {
@@ -59,18 +81,19 @@ class App extends Component {
             {lat: 45.38149, lng: -122.58226, name: 'Safeway Food & Drug', id: 'UKmguQPdsC7OWZobSzE9DQ'},
             {lat: 45.38199, lng: -122.58086, name: 'High Rocks Restaurant & Lounge', id: 'P0gBqOZ_HNU4Ze_QPRo4dw'}
         ];
-        window.addEventListener('resize', this.checkScreen);
-        this.setState({locations: defaultLocations, isLargeScreen: this.checkScreen(null, true)});
+        window.addEventListener('resize', this._checkScreen);
+        window.addEventListener('click', this._checkIfMarkerOrList);
+        this.setState({locations: defaultLocations, isLargeScreen: this._checkScreen(null, true)});
     }
 
     componentWillUnmount() {
-        window.removeEventListener('resize', this.checkScreen);
+        window.removeEventListener('resize', this._checkScreen);
         this._isMounted = false;
     }
 
     render() {
-        const { isLargeScreen, locations, activeLocation, query } = this.state;
-        const filteredLocations = query !== '' ? locations.filter(loc => loc.includes(query)) : locations;
+        const {isLargeScreen, locations, activeLocation, query} = this.state;
+        const filteredLocations = query !== '' ? locations.filter(loc => loc.name.toLowerCase().includes(query)) : locations;
         const listViewProps = {
             locations: filteredLocations,
             setActiveLocation: this.setActiveLocation,
@@ -86,16 +109,12 @@ class App extends Component {
                 <main>
                     {isLargeScreen ? (
                         <div className="large-screen-wrapper">
-                            <div className="search-wrapper__large-screen">
-
-                            </div>
+                            <SearchHeader updateQuery={this.updateQuery}/>
                             <ListView {...listViewProps}/>
                         </div>
                     ) : (
                         <React.Fragment>
-                            <div className="search-wrapper">
-
-                            </div>
+                            <SearchHeader updateQuery={this.updateQuery}/>
                             <ListView {...listViewProps}/>
                         </React.Fragment>
                     )}
