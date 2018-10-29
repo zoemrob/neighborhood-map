@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import Map from './components/Map';
 import ListView from './components/ListView';
 import SearchHeader from './components/SearchHeader';
+import LoadingOverlay from './components/LoadingOverlay';
 import {fetchById} from './searchAPI';
 
 class App extends Component {
@@ -25,15 +26,17 @@ class App extends Component {
 
     setActiveLocation = async (location) => {
         if (location.id !== '') {
+            this.setState({loading: true});
             const data = await fetchById(location.id);
             if (data.error) this._isMounted && this.setState({
+                loading: false,
                 activeLocation: {
                     error: true,
                     errorMessage: data.error
                 }
             });
             else {
-                this._isMounted && this.setState({activeLocation: {id: location.id, data}});
+                this._isMounted && this.setState({loading: false, activeLocation: {id: location.id, data}});
             }
         } else {
             this.setState({
@@ -91,7 +94,7 @@ class App extends Component {
     }
 
     render() {
-        const {isLargeScreen, locations, activeLocation, query} = this.state;
+        const {isLargeScreen, locations, activeLocation, query, loading} = this.state;
         const filteredLocations = query !== '' ? locations.filter(loc => loc.name.toLowerCase().includes(query)) : locations;
         const listViewProps = {
             locations: filteredLocations,
@@ -106,6 +109,7 @@ class App extends Component {
                     <h1 className="header-text">Map Example</h1>
                 </header>
                 <main>
+                    {loading && (<LoadingOverlay isLargeScreen={isLargeScreen}/>)}
                     {isLargeScreen ? (
                         <div className="large-screen-wrapper">
                             <SearchHeader updateQuery={this.updateQuery}/>

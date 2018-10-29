@@ -64,6 +64,7 @@ const ListView = ({locations, activeLocation, isLargeScreen, setActiveLocation})
                         })) : // move active location to the top of the list and render it differently on lower screen sizes
                     ([activeLocation, ...locations.filter(loc => loc.id !== activeLocation.id)]
                             .map(loc => {
+                                if (loc.id === '') return null;
                                 if (loc.id === activeLocation.id) {
                                     const {name, phone} = activeLocation.data;
                                     return (
