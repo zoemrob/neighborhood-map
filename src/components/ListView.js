@@ -39,24 +39,22 @@ const ListView = ({locations, activeLocation, isLargeScreen, setActiveLocation})
     return (
         <div className={`search-results-wrapper ${css(listStyles.container)}`}>
             <ul className={`list-vew ${css(listStyles.list)}`}>
-                {isLargeScreen ? (
-                        locations.map(loc => {
-                            if (loc.id === activeLocation.id) {
-                                return <DetailedItem data={activeLocation.data} isLargeScreen={isLargeScreen} key={activeLocation.id}/>
-                            } else {
-                                return <SimpleItem key={loc.id} loc={loc} setActiveLocation={setActiveLocation}/>;
-                            }
-                        })) : // move active location to the top of the list and render it differently on lower screen sizes
+                {isLargeScreen ?
+                    (locations.map(loc => loc.id === activeLocation.id ?
+                            <DetailedItem data={activeLocation.data} isLargeScreen={isLargeScreen} key={activeLocation.id}/> :
+                            <SimpleItem key={loc.id} loc={loc} setActiveLocation={setActiveLocation}/>
+                    )) :
+                    // move active location to the top of the list and render it differently on lower screen sizes
                     ([activeLocation, ...locations.filter(loc => loc.id !== activeLocation.id)]
-                            .map(loc => {
-                                if (loc.id === '') return null;
-                                if (loc.id === activeLocation.id) {
-                                    return <DetailedItem data={activeLocation.data} isLargeScreen={isLargeScreen} key={activeLocation.id}/>
-                                } else {
-                                    return <SimpleItem key={loc.id} loc={loc} setActiveLocation={setActiveLocation}/>;
-                                }
-                            })
-                    )}
+                        .map(loc => {
+                            // remove the blank if no activeLocation
+                            if (loc.id === '') return null;
+                            return loc.id === activeLocation.id ?
+                                <DetailedItem data={activeLocation.data} isLargeScreen={isLargeScreen} key={activeLocation.id}/> :
+                                <SimpleItem key={loc.id} loc={loc} setActiveLocation={setActiveLocation}/>;
+                        })
+                    )
+                }
             </ul>
         </div>
     )
