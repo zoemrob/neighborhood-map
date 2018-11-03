@@ -101,6 +101,7 @@ class App extends Component {
             setActiveLocation: this.setActiveLocation,
             activeLocation,
             isLargeScreen,
+            query
         };
 
         return (

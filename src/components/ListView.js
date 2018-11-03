@@ -26,23 +26,34 @@ const listStyles = StyleSheet.create({
     }
 });
 
-const SimpleItem = ({loc, setActiveLocation}) => (
-    <li
-        className={`list-item ${css(listStyles.listItem)}`}
-        tabIndex="1"
-        onClick={e => handler(e, loc.id, setActiveLocation)}
-        onFocus={e => handler(e, loc.id, setActiveLocation)}
-    >{loc.name}</li>
-);
 
-const ListView = ({locations, activeLocation, isLargeScreen, setActiveLocation}) => {
+const SimpleItem = ({loc, setActiveLocation, query}) => {
+    if (query.indexOf(' ') >= 0) {
+
+    }
+    const startIndex = loc.name.toLowerCase().indexOf(query);
+    const beg = loc.name.slice(0, startIndex);
+    const match = loc.name.slice(startIndex, startIndex + query.length);
+    const end = loc.name.slice(startIndex + query.length);
+    return (
+        <li
+            className={`list-item ${css(listStyles.listItem)}`}
+            tabIndex="1"
+            onClick={e => handler(e, loc.id, setActiveLocation)}
+            onFocus={e => handler(e, loc.id, setActiveLocation)}
+        >{beg}<b style={{backgroundColor: 'khaki'}}>{match.charAt(0) === query.charAt(0).toUpperCase() ?
+            query.charAt(0).toUpperCase() + query.slice(1) : query}</b>{end}</li>
+    );
+};
+
+const ListView = ({locations, activeLocation, isLargeScreen, setActiveLocation, query}) => {
     return (
         <div className={`search-results-wrapper ${css(listStyles.container)}`}>
             <ul className={`list-vew ${css(listStyles.list)}`}>
                 {isLargeScreen ?
                     (locations.map(loc => loc.id === activeLocation.id ?
                             <DetailedItem data={activeLocation.data} isLargeScreen={isLargeScreen} key={activeLocation.id}/> :
-                            <SimpleItem key={loc.id} loc={loc} setActiveLocation={setActiveLocation}/>
+                            <SimpleItem key={loc.id} loc={loc} setActiveLocation={setActiveLocation} query={query}/>
                     )) :
                     // move active location to the top of the list and render it differently on lower screen sizes
                     ([activeLocation, ...locations.filter(loc => loc.id !== activeLocation.id)]
@@ -51,7 +62,7 @@ const ListView = ({locations, activeLocation, isLargeScreen, setActiveLocation})
                             if (loc.id === '') return null;
                             return loc.id === activeLocation.id ?
                                 <DetailedItem data={activeLocation.data} isLargeScreen={isLargeScreen} key={activeLocation.id}/> :
-                                <SimpleItem key={loc.id} loc={loc} setActiveLocation={setActiveLocation}/>;
+                                <SimpleItem key={loc.id} loc={loc} setActiveLocation={setActiveLocation} query={query}/>;
                         })
                     )
                 }

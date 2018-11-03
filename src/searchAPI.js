@@ -6,8 +6,7 @@ const headers = {
 export async function fetchById(id) {
     try {
         const response = await fetch(`${url}/search/${id}`, {...headers});
-        const data = await response.json();
-        return data;
+        return await response.json();
     } catch (e) {
         console.log(e);
         return {error: `fetch failed to load for ${id}.`};
@@ -18,14 +17,13 @@ export async function fetchByName(name) {
     const encoded = encodeURIComponent(name);
     try {
         const response = await fetch(`${url}/search/name/${encoded}`, {...headers});
-        const data = await response.json();
-        return data;
+        return await response.json();
     } catch (e) {
         console.log(e);
         return {error: `fetch failed to load for ${name}`};
     }
 }
-/* for browswer fetching
+/* for browser fetching
 
 async function fetchByName(name) {
     const encoded = encodeURIComponent(name);
