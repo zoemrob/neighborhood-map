@@ -40,7 +40,7 @@ export default class SearchHeader extends Component {
 
     render() {
         return (
-            <div className="search-wrapper" style={{textAlign: 'center', backgroundColor: '#EAE7DC', height: '10%'}}>
+            <div className="search-wrapper" style={{textAlign: 'center', backgroundColor: '#EAE7DC', height: '8vh'}}>
                 <input
                     className={css(inputStyles.main)}
                     id="search-input"

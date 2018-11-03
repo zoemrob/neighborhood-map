@@ -106,7 +106,7 @@ class App extends Component {
 
         return (
             <React.Fragment>
-                <header className="header">
+                <header className="header" style={{height: '8vh'}}>
                     <h1 className="header-text">Map Example</h1>
                 </header>
                 <main>

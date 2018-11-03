@@ -9,28 +9,28 @@ const handler = (e, id, setActiveLocation) => {
 
 const listStyles = StyleSheet.create({
     container: {
-        height: '90%',
-        overflow: 'scroll'
+        height: '82vh'
     },
     list: {
         padding: '0',
         margin: '0',
         listStyleType: 'none',
         backgroundColor: '#EAE7DC',
-        height: '100%'
+        height: '100%',
+        overflow: 'scroll'
     },
     listItem: {
         fontSize: '1.5em',
         padding: '8px 1rem',
         borderBottom: '2px solid #d2cfc6'
-    }
+    },
 });
 
 
 const SimpleItem = ({loc, setActiveLocation, query}) => {
-    if (query.indexOf(' ') >= 0) {
-
-    }
+    // if (query.indexOf(' ') >= 0) {
+    // future, will support spaces for highlighting
+    // }
     const startIndex = loc.name.toLowerCase().indexOf(query);
     const beg = loc.name.slice(0, startIndex);
     const match = loc.name.slice(startIndex, startIndex + query.length);
