@@ -13,7 +13,7 @@ const Map = ({
                  center = {lat: 45.3815395, lng: -122.588222},
                  zoom = 16
              }) => (
-    <div id="map-container">
+    <div id="map-container" aria-label="locations" role="application">
         <GoogleMapReact
             bootstrapURLKeys={{key: key}}
             defaultCenter={center}

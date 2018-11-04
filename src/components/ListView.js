@@ -15,14 +15,18 @@ const listStyles = StyleSheet.create({
         padding: '0',
         margin: '0',
         listStyleType: 'none',
-        backgroundColor: '#EAE7DC',
+        backgroundColor: '#D7FAD3',//'#EAE7DC',
         height: '100%',
         overflow: 'scroll'
     },
     listItem: {
+        fontFamily: '"Playfair Display", serif',
         fontSize: '1.5em',
         padding: '8px 1rem',
-        borderBottom: '2px solid #d2cfc6'
+        borderBottom: '2px solid #d2cfc6',
+        ':hover': {
+            backgroundColor: '#C2F7BC',
+        }
     },
 });
 
@@ -48,7 +52,7 @@ const SimpleItem = ({loc, setActiveLocation, query}) => {
 
 const ListView = ({locations, activeLocation, isLargeScreen, setActiveLocation, query}) => {
     return (
-        <div className={`search-results-wrapper ${css(listStyles.container)}`}>
+        <section id="search-results" className={`search-results-wrapper ${css(listStyles.container)}`}>
             <ul className={`list-vew ${css(listStyles.list)}`}>
                 {isLargeScreen ?
                     (locations.map(loc => loc.id === activeLocation.id ?
@@ -67,7 +71,7 @@ const ListView = ({locations, activeLocation, isLargeScreen, setActiveLocation, 
                     )
                 }
             </ul>
-        </div>
+        </section>
     )
 };
 

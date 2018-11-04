@@ -4,6 +4,7 @@ import ListView from './components/ListView';
 import SearchHeader from './components/SearchHeader';
 import LoadingOverlay from './components/LoadingOverlay';
 import {fetchById} from './searchAPI';
+import MainHeader from "./components/MainHeader";
 
 class App extends Component {
 
@@ -106,9 +107,7 @@ class App extends Component {
 
         return (
             <React.Fragment>
-                <header className="header" style={{height: '8vh'}}>
-                    <h1 className="header-text">Map Example</h1>
-                </header>
+                <MainHeader/>
                 <main>
                     {loading && (<LoadingOverlay isLargeScreen={isLargeScreen}/>)}
                     {isLargeScreen ? (
@@ -119,13 +118,13 @@ class App extends Component {
                     ) : (
                         <SearchHeader updateQuery={this.updateQuery}/>
                     )}
-                    <div className="map-wrapper">
+                    <section className="map-wrapper">
                         <Map
                             locations={filteredLocations}
                             activeLocation={activeLocation}
                             setActiveLocation={this.setActiveLocation}
                             isLargeScreen={isLargeScreen}/>
-                    </div>
+                    </section>
                     {!isLargeScreen && <ListView {...listViewProps}/>}
                 </main>
             </React.Fragment>

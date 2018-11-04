@@ -4,14 +4,15 @@ import {yelpStarsLarge, yelpStarsSmall, yelpBurst} from "../yelpStars";
 
 const activeStyles = StyleSheet.create({
     activeItem: {
-        backgroundColor: '#d2cfc6',
+        backgroundColor: '#ADF5A5',
         padding: '1rem',
         textAlign: 'center'
     },
     activeHeader: {
+        fontFamily: '"Playfair Display", serif',
         margin: '0 0 1rem 0',
         fontSize: '1.8rem',
-        backgroundColor: '#fff',
+        backgroundColor: '#ECFDEA',
         borderRadius: '15px',
         padding: '1rem'
     },
@@ -37,10 +38,13 @@ const activeStyles = StyleSheet.create({
         textAlign: 'center',
     },
     valueDescription: {
+        ':after': {
+            content: "':'"
+        },
         fontWeight: 'bolder',
     },
     detailWrapper: {
-        backgroundColor: '#fff',
+        backgroundColor: '#ECFDEA',
         borderRadius: '15px',
         marginTop: '1rem',
         padding: '1rem'
@@ -50,41 +54,50 @@ const activeStyles = StyleSheet.create({
     },
     yelpBurst: {
         maxWidth: '50px'
+    },
+    reviewCount: {
+        color: 'darkgrey',
+        fontSize: '0.8em'
     }
 });
 
 
 
 const DetailedItem = ({data, isLargeScreen}) => {
-    const {name, phone, rating, location} = data;
+    const {name, phone, rating, location, url, review_count} = data;
     const {display_address} = location;
 
     return (
         <li className={css(activeStyles.activeItem)}>
-            <h2 className={css(activeStyles.activeHeader)}>{name}</h2>
-            <div className={css(activeStyles.imageWrapper)}>
-                <img alt={"a photo of " + name} src={data.image_url} className={css(activeStyles.image)}/>
-            </div>
-            <div className={css(activeStyles.detailWrapper)}>
-                <p className={css(activeStyles.activeDetails)}>
-                    <span className={css(activeStyles.valueDescription)}>Yelp Rating:</span>
-                    <br/>
-                    <img alt={rating + " star rating"} src={isLargeScreen ? yelpStarsLarge[rating] : yelpStarsSmall[rating]}/>
-                </p>
-                <p className={css(activeStyles.activeDetails)}>
-                    <span className={css(activeStyles.valueDescription)}>Phone:</span>
-                    <span className={css(activeStyles.values)}>{phone !== '' ? phone : 'No phone number available'}</span>
-                </p>
-                <p className={css(activeStyles.activeDetails)}>
-                    <span className={css(activeStyles.valueDescription)}>Address:</span>
-                    <span className={css(activeStyles.values)}>{display_address[0]}</span>
-                    <span className={css(activeStyles.values)}>{display_address[1]}</span>
-                </p>
-                <aside className={css(activeStyles.attrition)}>
-                    Data provided by Yelp
-                    <img className={css(activeStyles.yelpBurst)} alt="yelp-burst" src={yelpBurst}/>
-                </aside>
-            </div>
+            <article id="item-detail">
+                <h2 className={css(activeStyles.activeHeader)}>{name}</h2>
+                <div className={css(activeStyles.imageWrapper)}>
+                    <img alt={"a photo of " + name} src={data.image_url} className={css(activeStyles.image)}/>
+                </div>
+                <div className={css(activeStyles.detailWrapper)}>
+                    <p className={css(activeStyles.activeDetails)}>
+                        <span className={css(activeStyles.reviewCount)} aria-label="location reviews">{review_count} Reviews</span>
+                        <br />
+                        <img alt={rating + " star rating"} src={isLargeScreen ? yelpStarsLarge[rating] : yelpStarsSmall[rating]}/>
+                    </p>
+                    <p className={css(activeStyles.activeDetails)}>
+                        <label className={css(activeStyles.valueDescription)} id="phone-label">Phone</label>
+                        <span aria-labelledby="phone-label" className={css(activeStyles.values)}>{phone !== '' ? phone : 'No phone number available'}</span>
+                    </p>
+                    <p className={css(activeStyles.activeDetails)}>
+                        <label id="address-label" className={css(activeStyles.valueDescription)}>Address</label>
+                        <span aria-labelledby="address-label" className={css(activeStyles.values)}>{display_address[0]}</span>
+                        <span aria-labelledby="address-label" className={css(activeStyles.values)}>{display_address[1]}</span>
+                    </p>
+                    <p className={css(activeStyles.activeDetails)}>
+                        <a href={url}>Link to Yelp Listing</a>
+                    </p>
+                    <aside className={css(activeStyles.attrition)}>
+                        Data provided by Yelp
+                        <img className={css(activeStyles.yelpBurst)} alt="yelp-burst" src={yelpBurst}/>
+                    </aside>
+                </div>
+            </article>
         </li>
     )
 };

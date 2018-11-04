@@ -11,11 +11,6 @@ export default class Marker extends Component {
         this.props.setActiveLocation({id: this.props.id});
     };
 
-    // handleBlur = e => {
-    //     e.stopPropagation();
-    //     this.props.setActiveLocation({id: ''});
-    // };
-
     static activeStyles = {
         fontWeight: 'bold',
         fontSize: '1.3em',
@@ -31,6 +26,7 @@ export default class Marker extends Component {
         return (
             <React.Fragment>
                 <label
+                    id={id + '-label'}
                     htmlFor={id}
                     className="marker-label"
                     style={active || document.activeElement === this.activeRef.current ? Marker.activeStyles : null}
@@ -39,10 +35,10 @@ export default class Marker extends Component {
                     tabIndex="0"
                     className="map-icon"
                     id={id}
+                    aria-labelledby={id + '-label'}
                     ref={this.activeRef}
                     style={active || document.activeElement === this.activeRef.current ? {transform: 'translate(-50%, -50%) scale(1.3)'} : null}
                     onFocus={!active ? this.handleFocus : null}
-                    // onBlur={active ? this.handleBlur : null}
                 >
                     <svg height="24" version="1.1" width="24" xmlns="http://www.w3.org/2000/svg">
                         <g transform="translate(0 -1028.4)">

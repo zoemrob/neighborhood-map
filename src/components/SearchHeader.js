@@ -40,7 +40,7 @@ export default class SearchHeader extends Component {
 
     render() {
         return (
-            <div className="search-wrapper" style={{textAlign: 'center', backgroundColor: '#EAE7DC', height: '8vh'}}>
+            <section id="search-input" className="search-wrapper" style={{textAlign: 'center', backgroundColor: '#D7FAD3', height: '8vh'}}>
                 <input
                     className={css(inputStyles.main)}
                     id="search-input"
@@ -49,7 +49,7 @@ export default class SearchHeader extends Component {
                     value={this.state.query}
                     onChange={this._handleInput}
                 />
-            </div>
+            </section>
         );
     }
 }
