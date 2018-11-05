@@ -60,7 +60,7 @@ const ListView = ({locations, activeLocation, isLargeScreen, setActiveLocation, 
             <ul className={`list-vew ${css(listStyles.list)}`}>
                 {isLargeScreen ?
                     (locations.map(loc => loc.id === activeLocation.id ?
-                            <DetailedItem data={activeLocation.data} isLargeScreen={isLargeScreen} key={activeLocation.id}/> :
+                            <DetailedItem error={activeLocation.error} errorMessage={activeLocation.errorMessage} data={!activeLocation.error ? activeLocation.data : loc} isLargeScreen={isLargeScreen} key={activeLocation.id}/> :
                             <SimpleItem key={loc.id} loc={loc} setActiveLocation={setActiveLocation} query={query}/>
                     )) :
                     // move active location to the top of the list and render it differently on lower screen sizes
@@ -69,7 +69,7 @@ const ListView = ({locations, activeLocation, isLargeScreen, setActiveLocation, 
                             // remove the blank if no activeLocation
                             if (loc.id === '') return null;
                             return loc.id === activeLocation.id ?
-                                <DetailedItem data={activeLocation.data} isLargeScreen={isLargeScreen} key={activeLocation.id}/> :
+                                <DetailedItem error={activeLocation.error} errorMessage={activeLocation.errorMessage} data={!activeLocation.error ? activeLocation.data : loc} isLargeScreen={isLargeScreen} key={activeLocation.id}/> :
                                 <SimpleItem key={loc.id} loc={loc} setActiveLocation={setActiveLocation} query={query}/>;
                         })
                     )

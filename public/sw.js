@@ -98,15 +98,3 @@ self.addEventListener('message', function(message) {
             console.log('Message type: ' + message.data.type + ' not handled by service worker.');
     } 
 });
-
-// left promise chain in case async / await goes wrong
-// evt.respondWith(caches.open(dynamicCacheName)
-//     .then(cache => cache.match(evt.request)
-//         .then(res => {
-//             return res || fetch(evt.request).then(fetchRes => {
-//                 cache.put(fetchRes, fetchRes.clone());
-//                 return fetchRes;
-//             })
-//         })
-//     )
-// );

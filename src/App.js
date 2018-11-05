@@ -28,16 +28,34 @@ class App extends Component {
     setActiveLocation = async (location) => {
         if (location.id !== '') {
             this.setState({loading: true});
-            const data = await fetchById(location.id);
-            if (data.error) this._isMounted && this.setState({
-                loading: false,
-                activeLocation: {
-                    error: true,
-                    errorMessage: data.error
+            try {
+                const data = await fetchById(location.id);
+                if (data.error) {
+                    console.log('Error from api: ', data.error);
+                    this._isMounted && this.setState({
+                        loading: false,
+                        activeLocation: {
+                            id: location.id,
+                            data: {},
+                            error: true,
+                            errorMessage: 'There was an error retrieving location details. Please refresh.'
+                        }
+                    });
                 }
-            });
-            else {
-                this._isMounted && this.setState({loading: false, activeLocation: {id: location.id, data}});
+                else {
+                    this._isMounted && this.setState({loading: false, activeLocation: {error: false, id: location.id, data}});
+                }
+            } catch (e) {
+                console.log('Failed to load from app server.', e);
+                this._isMounted && this.setState({
+                    loading: false,
+                    activeLocation: {
+                        id: location.id,
+                        data: {},
+                        error: true,
+                        errorMessage: 'There was an error retrieving location details. Please refresh.'
+                    }
+                });
             }
         } else {
             this.setState({

@@ -19,7 +19,7 @@ const Map = ({
             defaultCenter={center}
             defaultZoom={zoom}
             zoom={!isLargeScreen ? 15 : null}
-            center={activeLocation.id !== '' ? ({
+            center={activeLocation.id !== '' && !activeLocation.error ? ({
                 lat: activeLocation.data.coordinates.latitude,
                 lng: activeLocation.data.coordinates.longitude
             }) : null}

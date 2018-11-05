@@ -63,7 +63,18 @@ const activeStyles = StyleSheet.create({
 
 
 
-const DetailedItem = ({data, isLargeScreen}) => {
+const DetailedItem = ({error, errorMessage, data, isLargeScreen}) => {
+    //debugger;
+    if (error) {
+        return (
+            <li className={css(activeStyles.activeItem)}>
+                <article id="item-detail">
+                    <h2 className={css(activeStyles.activeHeader)}>{data.name}</h2>
+                    <p className={css(activeStyles.activeDetails)}>{errorMessage}</p>
+                </article>
+            </li>
+        );
+    }
     const {name, phone, rating, location, url, review_count} = data;
     const {display_address} = location;
 
