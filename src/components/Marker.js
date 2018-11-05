@@ -6,9 +6,21 @@ export default class Marker extends Component {
         super(props);
         this.activeRef = React.createRef();
     }
+
     
     handleFocus = () => {
         this.props.setActiveLocation({id: this.props.id});
+    };
+
+    // @keydown('enter')
+    //     submit(evt) {
+    //     evt.stopPropagation();
+    //     this.props.setActiveLocation({id: this.props.id})
+    // }
+
+    handler = (e, id, setActiveLocation) => {
+        e.stopPropagation();
+        setActiveLocation({id});
     };
 
     static activeStyles = {
@@ -21,7 +33,7 @@ export default class Marker extends Component {
     };
 
     render() {
-        const { id, name, active } = this.props;
+        const { id, name, active, setActiveLocation } = this.props;
 
         return (
             <React.Fragment>
@@ -38,7 +50,12 @@ export default class Marker extends Component {
                     aria-labelledby={id + '-label'}
                     ref={this.activeRef}
                     style={active || document.activeElement === this.activeRef.current ? {transform: 'translate(-50%, -50%) scale(1.3)'} : null}
-                    onFocus={!active ? this.handleFocus : null}
+                    //onFocus={!active ? this.handleFocus : null}
+                    onClick={e => this.handler(e, id, setActiveLocation)}
+                    onKeyDown={e => {
+                        if (e.keyCode === 13) this.handler(e, id, setActiveLocation);
+                        else { e.stopPropagation(); }
+                    }}
                 >
                     <svg height="24" version="1.1" width="24" xmlns="http://www.w3.org/2000/svg">
                         <g transform="translate(0 -1028.4)">

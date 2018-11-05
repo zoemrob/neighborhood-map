@@ -44,7 +44,11 @@ const SimpleItem = ({loc, setActiveLocation, query}) => {
             className={`list-item ${css(listStyles.listItem)}`}
             tabIndex="1"
             onClick={e => handler(e, loc.id, setActiveLocation)}
-            onFocus={e => handler(e, loc.id, setActiveLocation)}
+            //onFocus={e => handler(e, loc.id, setActiveLocation)}
+            onKeyDown={e => {
+                if (e.keyCode === 13) handler(e, loc.id, setActiveLocation);
+                else { e.stopPropagation(); }
+            }}
         >{beg}<b style={{backgroundColor: 'khaki'}}>{match.charAt(0) === query.charAt(0).toUpperCase() ?
             query.charAt(0).toUpperCase() + query.slice(1) : query}</b>{end}</li>
     );

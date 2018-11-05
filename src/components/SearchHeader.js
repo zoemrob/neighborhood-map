@@ -42,6 +42,7 @@ export default class SearchHeader extends Component {
         return (
             <section id="search-input" className="search-wrapper" style={{textAlign: 'center', backgroundColor: '#D7FAD3', height: '8vh'}}>
                 <input
+                    tabIndex="1"
                     className={css(inputStyles.main)}
                     id="search-input"
                     placeholder="Search"
@@ -53,24 +54,3 @@ export default class SearchHeader extends Component {
         );
     }
 }
-/*
-.header input.search-input {
-    -webkit-transition: all 0.3s ease;
-    transition: all 0.3s ease;
-    width: 60%;
-    font-size: 1.5rem;
-    padding: 8px 8px 8px 24px;
-    margin: 8px;
-    border-radius: 5px;
-    border: none;
-}
-
-.header input.search-input:focus,
-.header input.search-input:hover {
-    outline: none;
-    box-shadow: 0 5px 5px 0 rgba(0,0,0,0.2);
-    background-color: rgba(255,255,255,0.85);
-    border-radius: 20px;
-    transform: scale(1.1);
-}
- */

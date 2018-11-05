@@ -35,7 +35,7 @@ function makeStaticUrls (imgparts, statics) {
     return [...firstSet, ...secondSet, ...statics]
 }
 
-const staticCacheName = 'static-assets-v1.3';
+const staticCacheName = 'static-assets-v1.4';
 const staticCacheUrls = makeStaticUrls(imgParts, staticFiles);
 
 const dynamicCacheName = 'dynamic-cache-v1';
