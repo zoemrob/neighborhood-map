@@ -1,8 +1,14 @@
+/** default headers */
 const url = 'http://localhost:6001';
 const headers = {
     'Accept': 'application/json'
 };
 
+/**
+ * fetches from express backend by yelpId
+ * @param id {String}           - yelpId
+ * @returns {Promise||Object}   - yelp data or error data
+ */
 export async function fetchById(id) {
     try {
         const response = await fetch(`${url}/search/${id}`, {...headers});
@@ -13,6 +19,12 @@ export async function fetchById(id) {
     }
 }
 
+/**
+ * fetches from express backend by search terms
+ * NOT IN USE
+ * @param name {String}         - business name
+ * @returns {Promise||Object}   - yelp data or error data
+ */
 export async function fetchByName(name) {
     const encoded = encodeURIComponent(name);
     try {
@@ -23,7 +35,7 @@ export async function fetchByName(name) {
         return {error: `fetch failed to load for ${name}`};
     }
 }
-/* for browser fetching
+/* for browser fetching, formatted to test in console.
 
 async function fetchByName(name) {
     const encoded = encodeURIComponent(name);

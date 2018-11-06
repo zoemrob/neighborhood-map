@@ -1,3 +1,4 @@
+/** Utility containing mapping to yelp star resource urls */
 const urlPrefix = 'http://localhost:' + (process.env.PORT || '3000') + '/yelpresources/';
 
 export const yelpStarsSmall = {

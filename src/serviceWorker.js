@@ -127,6 +127,10 @@ export function unregister() {
     }
 }
 
+/**
+ * callback for config to automatically activate next service worker
+ * @param worker
+ */
 function postSkip(worker) {
     worker.waiting.postMessage({type: 'skip'})
 }
