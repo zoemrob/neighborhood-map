@@ -27,6 +27,12 @@ const imgParts = [
     '5'
 ];
 
+/** Forms static urls based on simpler parts
+ *
+ * @param imgparts {Array<String>}
+ * @param statics {Array<String>}
+ * @return {Array<String>}
+ */
 function makeStaticUrls (imgparts, statics) {
     const prefix = 'yelpresources/regular_';
     const suffix = '.png';
@@ -35,7 +41,7 @@ function makeStaticUrls (imgparts, statics) {
     return [...firstSet, ...secondSet, ...statics]
 }
 
-const staticCacheName = 'static-assets-v1.4';
+const staticCacheName = 'static-assets-v1.5';
 const staticCacheUrls = makeStaticUrls(imgParts, staticFiles);
 
 const dynamicCacheName = 'dynamic-cache-v1';
@@ -53,6 +59,10 @@ self.addEventListener('install', function (evt) {
 });
 
 self.addEventListener('activate', function(evt) {
+    /**
+     * deletes old caches on activation
+     * @return {Promise<any[]>}
+     */
     const preCache = async () => {
         const storedCaches = await caches.keys();
         return Promise.all(storedCaches.filter(stored => !allCaches.includes(stored)).map(stored => caches.delete(stored)));
@@ -62,6 +72,11 @@ self.addEventListener('activate', function(evt) {
 
 self.addEventListener('fetch', function(evt) {
     if (evt.request.url.includes(apiPrefix)) {
+        /**
+         * Opens dynamic cache, checks if file is in cache, if not, caches, clones response, and returns response
+         * @param req {FetchEvent.request}
+         * @return {Promise<*>}
+         */
         const fetchAndCache = async (req) => {
             try {
                 const cache = await caches.open(dynamicCacheName);
@@ -80,6 +95,7 @@ self.addEventListener('fetch', function(evt) {
         };
         evt.respondWith(fetchAndCache(evt.request));
     } else {
+        // retrieve from static cache
         evt.respondWith(caches.open(staticCacheName)
             .then(cache => cache.match(evt.request)
                 .then(res => res || fetch(evt.request))
