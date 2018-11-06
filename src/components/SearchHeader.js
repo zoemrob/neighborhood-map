@@ -21,6 +21,11 @@ const inputStyles = StyleSheet.create({
 
 });
 
+/**
+ * SearchHeader Component
+ * holds input for filtering locations and search for specifics
+ * @constructor
+ */
 export default class SearchHeader extends Component {
     constructor(props) {
         super(props);
@@ -29,12 +34,17 @@ export default class SearchHeader extends Component {
         }
     }
 
+    /**
+     * event handler for input, calls setState
+     * @param e {Event}
+     */
     _handleInput = e => {
         e.stopPropagation();
         if (e.target.value !== this.state.query) this.setState({query: e.target.value});
     };
 
     componentDidUpdate(prevProps, prevState) {
+        // if state updated and query is different, update App
         if (prevState.query !== this.state.query) this.props.updateQuery(this.state.query);
     }
 

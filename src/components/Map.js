@@ -4,6 +4,18 @@ import Marker from './Marker';
 import {gmapsAPIKey} from "../apikeys";
 import '../styles/Map.css'
 
+/** Map Component, utilizing google-map-react
+ *
+ * @param activeLocation {Object}       - App.state.activeLocation metadata
+ * @param locations {Array}             - all location objects metadata
+ * @param setActiveLocation {Function}  - method to update App.state.activeLocation
+ * @param isLargeScreen {Boolean}       - boolean to determine zoom size
+ * @param key {String}                  - google maps api key
+ * @param center {Object}               - contains default center coordinates
+ * @param zoom {Number}                 - default zoom, alternate zoom available to different viewports
+ *
+ * @constructor
+ */
 const Map = ({
                  activeLocation,
                  locations,

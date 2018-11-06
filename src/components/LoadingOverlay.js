@@ -25,6 +25,12 @@ const loadingStyles = StyleSheet.create({
     }
 });
 
+/** from npm package react-loading
+ * LoadingOverlay in case App.state.loading
+ *
+ * @param isLargeScreen {Boolean}
+ * @constructor
+ */
 const LoadingOverlay = ({isLargeScreen}) => (
     <div className={css(loadingStyles.default)}>
         <ReactLoading

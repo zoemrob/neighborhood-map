@@ -14,6 +14,10 @@ const header = StyleSheet.create({
     }
 });
 
+/** simple jsx render for App header
+ *
+ * @constructor
+ */
 const MainHeader = () => (
     <header className={css(header.el)}>
         <h1 className={css(header.text)}>Gladstone Neighborhood Map</h1>

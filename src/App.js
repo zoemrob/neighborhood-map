@@ -162,8 +162,10 @@ class App extends Component {
             <React.Fragment>
                 <MainHeader/>
                 <main>
+                    {/** if app is loading, show overlay*/}
                     {loading && (<LoadingOverlay isLargeScreen={isLargeScreen}/>)}
                     {isLargeScreen ? (
+                        // wrap in div if large screen
                         <div className="large-screen-wrapper">
                             <SearchHeader updateQuery={this.updateQuery}/>
                             <ListView {...listViewProps}/>

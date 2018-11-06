@@ -62,9 +62,17 @@ const activeStyles = StyleSheet.create({
 });
 
 
-
+/**
+ * DetailedItem Component - displays yelpAPI data from App.state.activeLocation.data
+ *
+ * @param error {Boolean}       - indication of error fetching data
+ * @param errorMessage {String} - if error, the message
+ * @param data {Object}         - App.state.activeLocation.data metadata
+ * @param isLargeScreen {Boolean} - Screen size check for rendering
+ * @constructor
+ */
 const DetailedItem = ({error, errorMessage, data, isLargeScreen}) => {
-    //debugger;
+    // if there is an error, return a simpler view with the error message
     if (error) {
         return (
             <li className={css(activeStyles.activeItem)}>

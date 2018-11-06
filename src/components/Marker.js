@@ -1,28 +1,27 @@
 import React, { Component } from 'react';
 import '../styles/Marker.css';
 
+/** Representation of map marker
+ * @constructor
+ */
 export default class Marker extends Component {
     constructor(props) {
         super(props);
         this.activeRef = React.createRef();
     }
 
-    
-    handleFocus = () => {
-        this.props.setActiveLocation({id: this.props.id});
-    };
-
-    // @keydown('enter')
-    //     submit(evt) {
-    //     evt.stopPropagation();
-    //     this.props.setActiveLocation({id: this.props.id})
-    // }
-
+    /**
+     * Stops event propagation, executes callback
+     * @param e {Event}
+     * @param id {String}
+     * @param setActiveLocation {Function}
+     */
     handler = (e, id, setActiveLocation) => {
         e.stopPropagation();
         setActiveLocation({id});
     };
 
+    // styles available to all markers
     static activeStyles = {
         fontWeight: 'bold',
         fontSize: '1.3em',
@@ -50,7 +49,7 @@ export default class Marker extends Component {
                     aria-labelledby={id + '-label'}
                     ref={this.activeRef}
                     style={active || document.activeElement === this.activeRef.current ? {transform: 'translate(-50%, -50%) scale(1.3)'} : null}
-                    //onFocus={!active ? this.handleFocus : null}
+                    // click or enter key triggers event handler
                     onClick={e => this.handler(e, id, setActiveLocation)}
                     onKeyDown={e => {
                         if (e.keyCode === 13) this.handler(e, id, setActiveLocation);
